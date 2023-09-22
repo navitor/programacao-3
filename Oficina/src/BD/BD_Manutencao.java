@@ -9,17 +9,17 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import model.Carro;
+import model.Manutencao;
 
 /**
  *
  * @author alunos
  */
-public class BD_Carro {
+public class BD_Manutencao {
     
-    public int salvarBanco(ArrayList<Carro> dados){
+    public int salvarBanco(ArrayList<Manutencao> dados){
         try{
-            FileOutputStream fs = new FileOutputStream("CarrosBanco.vgr");
+            FileOutputStream fs = new FileOutputStream("ManuBanco.vgr");
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(dados);
             os.close();
@@ -30,19 +30,19 @@ public class BD_Carro {
         }
     }
     
-    public ArrayList<Carro> carregarBanco() {
-        ArrayList<Carro> carrosBD = new ArrayList<>();
+    public ArrayList<Manutencao> carregarBanco() {
+        ArrayList<Manutencao> manuBD = new ArrayList<>();
         try {
-            FileInputStream fis = new FileInputStream("CarrosBanco.vgr");
+            FileInputStream fis = new FileInputStream("ManuBanco.vgr");
             ObjectInputStream ois = new ObjectInputStream(fis);
             Object ob = ois.readObject();
             
-            carrosBD = (ArrayList<Carro>) ob;
+            manuBD = (ArrayList<Manutencao>) ob;
             ois.close();
-            return carrosBD;
+            return manuBD;
         } catch (Exception ex) {
             ex.printStackTrace();
-            return carrosBD;
+            return manuBD;
         }
     }
     

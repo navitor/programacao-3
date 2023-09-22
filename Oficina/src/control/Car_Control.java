@@ -49,6 +49,10 @@ public class Car_Control {
     public void novoID(){
         int tamanhoArray = BDcarro.size();
         jTid.setText((tamanhoArray + 1)+"");
+        jTPlaca.setText("");
+        jTkms.setText("");
+
+        carregarLista();
     }
     
     public void salvarCarro(){
