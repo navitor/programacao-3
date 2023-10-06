@@ -13,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import model.Cliente;
 import model.Produto;
 
 /**
@@ -46,6 +45,17 @@ public class ControladorProduto {
         novoID();
         carregarLista();
     }
+    
+    public int pegarIndex(Produto produto) {
+        int index = 0;
+        for (Produto prod1 : BDProduto) {
+            if (prod1.getId() == produto.getId()) {
+                break;
+            }
+            index++;
+        }
+        return index;
+    }
 
     public void novoID() {
         BDProduto = bd_Produto.carregarBanco();
@@ -56,16 +66,6 @@ public class ControladorProduto {
         limpar();
     }
     
-    public int pegarIndex(Produto produto1) {
-        int index = 0;
-        for (Produto prod1 : BDProduto) {
-            if (prod1.getId() == prod1.getId()) {
-                break;
-            }
-            index++;
-        }
-        return index;
-    }
     
     public void carregarLista() {
         ListaTelaProduto = new DefaultListModel();
@@ -81,9 +81,9 @@ public class ControladorProduto {
     
     public void limpar() {
         jTNome.setText("");
+        jTNome.setBackground(Color.WHITE);        
         jTQuantidade.setText("");
         jTValor.setText("");
-        jTNome.setBackground(Color.WHITE);
         jBSalvar.setText("Salvar");
     }
     
@@ -91,11 +91,29 @@ public class ControladorProduto {
         return temp.isEmpty();
     }
     
-    public void salvarEditarCliente() {
+    public boolean verificarTipoInt(String x){
+        try {
+            int y = Integer.parseInt(x);
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
+    }
+    
+    public boolean verificarTipoFloat(String x){
+        try {
+            float y = Float.parseFloat(x);
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
+    }
+    
+    public void salvarEditarProduto() {
         String nId = jTId.getText();
         String nome = jTNome.getText();
-        int nQtd = jTQuantidade.getComponentCount();
-        float nValor = jTValor.getAlignmentX();
+        String nQtd = jTQuantidade.getText();
+        String nValor = jTValor.getText();
         
         boolean verificador = true;
 
@@ -103,15 +121,33 @@ public class ControladorProduto {
             JOptionPane.showMessageDialog(null, "O campo Nome não pode ser vazio");
             jTNome.setBackground(Color.red);
             verificador = false;
+        } else if (campoVazio(nQtd)) {
+            JOptionPane.showMessageDialog(null, "O campo Quantidade não pode ser vazio");
+            jTQuantidade.setBackground(Color.red);
+            verificador = false;
+        } else if(campoVazio(nValor)) {
+            JOptionPane.showMessageDialog(null, "O campo Valor não pode ser vazio");
+            jTValor.setBackground(Color.red);
+            verificador = false;
+        } else if(verificarTipoInt(nQtd)){
+            JOptionPane.showMessageDialog(null, "O campo Quantidade não pode ser vazio");
+            jTQuantidade.setBackground(Color.red);
+            verificador = false;
+        } else if(verificarTipoFloat(nValor)){
+            JOptionPane.showMessageDialog(null, "O campo Valor não pode ser vazio");
+            jTValor.setBackground(Color.red);
+            verificador = false;
         }
+        
         if (verificador) {
             //SALVAR
-            Produto produto1 = new Produto(0, nome, 0, 0);
+            Produto produto1 = new Produto(Integer.parseInt(nId), nome, Integer.parseInt(nQtd),Float.parseFloat(nValor) );
 
             if (jBSalvar.getText().compareToIgnoreCase("Salvar") == 0) {
                 BDProduto.add(produto1);
 
             } else {
+            
                 int index = pegarIndex(produto1);
                 BDProduto.set(index, produto1);
             }
@@ -132,6 +168,8 @@ public class ControladorProduto {
 
         jTId.setText(produtoEditar.getId() + "");
         jTNome.setText(produtoEditar.getNome());
+        jTQuantidade.setText(produtoEditar.getQtdEstoque() + "");
+        jTValor.setText(produtoEditar.getValue() + "");
         jBSalvar.setText("Editar");
     }
     
@@ -144,11 +182,5 @@ public class ControladorProduto {
         return null;
     }
     
-    
-    /*public void calcvalor(int qtd){
-        float soma = jTQuantidade * jTValor;
-        
-    }
-    */
     
 }

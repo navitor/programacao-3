@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import javax.swing.JDesktopPane;
 import view.TelaCliente;
 import view.TelaProduto;
+import view.TelaVenda;
 
 /**
  *
@@ -36,6 +37,17 @@ public class ControladorTelas {
         desktopPane.updateUI();
         Dimension resolucao = desktopPane.getSize();//captura a resolução do conteiner
         TelaProduto tp = new TelaProduto();
+        tp.setSize(resolucao);
+        tp.setLocation(0, 0);
+        desktopPane.add(tp);
+        tp.setVisible(true);
+    }
+    
+    public void TelaVenda(){
+        desktopPane.removeAll();
+        desktopPane.updateUI();
+        Dimension resolucao = desktopPane.getSize();//captura a resolução do conteiner
+        TelaVenda tp = new TelaVenda();
         tp.setSize(resolucao);
         tp.setLocation(0, 0);
         desktopPane.add(tp);

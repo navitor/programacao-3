@@ -53,7 +53,7 @@ public class ControladorCliente {
 
     public int pegarIndex(Cliente cliente) {
         int index = 0;
-        for (Cliente cli : BDClientes) {
+        for (Cliente cli : BDClientes) {            
             if (cli.getId() == cliente.getId()) {
                 break;
             }

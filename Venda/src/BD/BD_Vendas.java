@@ -9,16 +9,16 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import model.Produto;
+import model.Venda;
 
 /**
  *
  * @author alunos
  */
-public class BD_Produto {
-    public int salvarBanco(ArrayList<Produto> dados) {
+public class BD_Vendas {
+    public int salvarBanco(ArrayList<Venda> dados) {
         try {
-            FileOutputStream fs = new FileOutputStream("ProdutoBanco.vgr");
+            FileOutputStream fs = new FileOutputStream("VendaBanco.vgr");
             ObjectOutputStream os = new ObjectOutputStream(fs);
             os.writeObject(dados);
             os.close();
@@ -29,14 +29,14 @@ public class BD_Produto {
         }
     }
 
-    public ArrayList<Produto> carregarBanco() {
-        ArrayList<Produto> dados = new ArrayList<>();
+    public ArrayList<Venda> carregarBanco() {
+        ArrayList<Venda> dados = new ArrayList<>();
         try {
-            FileInputStream fis = new FileInputStream("ProdutoBanco.vgr");
+            FileInputStream fis = new FileInputStream("VendaBanco.vgr");
             ObjectInputStream ois = new ObjectInputStream(fis);
             Object ob = ois.readObject();
 
-            dados = (ArrayList<Produto>) ob;
+            dados = (ArrayList<Venda>) ob;
             ois.close();
             return dados;
         } catch (Exception ex) {
@@ -44,5 +44,4 @@ public class BD_Produto {
             return dados;
         }
     }
-    
 }
